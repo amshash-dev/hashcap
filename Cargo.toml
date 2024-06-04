@@ -1,0 +1,8 @@
+[package]
+name = "hashcap"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+xcap = "0.0.10"
+chrono = "0.4.38"
