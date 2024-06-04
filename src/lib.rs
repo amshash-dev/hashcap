@@ -1,11 +1,8 @@
-use std::time::Instant;
-use xcap::Monitor;
 use chrono;
 
 pub mod command {
     pub fn screen() {
         let path = String::from("target/");
-        let start = super::Instant::now();
         let monitors = xcap::Monitor::all().unwrap();
 
         for monitor in monitors {
@@ -16,6 +13,10 @@ pub mod command {
         image
             .save(format!("{}/{}.png",path, date.format("%Y-%m-%d")))
             .unwrap();
+        }
     }
+
+    pub fn help() {
+        println!("Usage: hashcap [-s Capture the whole screen]\n\t       [-h List avaialable commands]");
     }
 }
