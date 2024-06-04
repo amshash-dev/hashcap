@@ -1,8 +1,7 @@
 use chrono;
 
 pub mod command {
-    pub fn screen() {
-        let path = String::from("target/");
+    pub fn screen(path: String) {
         let monitors = xcap::Monitor::all().unwrap();
 
         for monitor in monitors {
@@ -11,7 +10,7 @@ pub mod command {
         let date = super::chrono::offset::Local::now();
 
         image
-            .save(format!("{}/{}.png",path, date.format("%Y-%m-%d")))
+            .save(format!("{}{}.png",path, date.format("%Y-%m-%d")))
             .unwrap();
         }
     }
