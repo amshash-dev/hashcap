@@ -1,21 +1,43 @@
-use chrono;
+use std::path::PathBuf;
 
+pub mod utils {
+    pub fn gfnacp(path: &mut super::PathBuf) -> String {
+        let mut ret_string = String::new();
+        let path_str = <super::PathBuf as Clone>::clone(&path)
+            .into_os_string()
+            .into_string()
+            .unwrap();
+
+        for (_i, c) in path_str.chars().rev().enumerate() {
+            if c == '/' {
+                break;
+            }
+
+            ret_string.push_str(&c.to_string());
+        }
+
+        path.pop();
+
+        return ret_string.chars().rev().collect();
+    }
+}
 pub mod command {
-    pub fn screen(path: String) {
+    pub fn screen(path: super::PathBuf, filename: String) {
         let monitors = xcap::Monitor::all().unwrap();
 
         for monitor in monitors {
-        let image = monitor.capture_image().unwrap();
+            let image = monitor.capture_image().unwrap();
 
-        let date = super::chrono::offset::Local::now();
-
-        image
-            .save(format!("{}{}.png",path, date.format("%Y-%m-%d")))
-            .unwrap();
+            image
+                .save(format!("{}/{}.png", path.display(), filename))
+                .unwrap();
+            // TODO: match these errors for nicer message on no directory
         }
     }
 
     pub fn help() {
-        println!("Usage: hashcap [-s Capture the whole screen]\n\t       [-h List avaialable commands]");
+        println!(
+            "Usage: hashcap [-s Capture the whole screen]\n\t       [-h List avaialable commands]"
+        );
     }
 }
