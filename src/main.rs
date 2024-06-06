@@ -33,6 +33,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         filename = utils::gfnacp(&mut path);
     }
 
+    let file_exists = utils::if_file_exists(&path, &filename);
+
+    if file_exists {
+        println!("File {}.png already exists", filename);
+        return Ok(());
+    }
+
     match args[1].as_str() {
         "--screen" => command::screen(path, filename),
         "--s" => command::screen(path, filename),

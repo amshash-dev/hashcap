@@ -20,6 +20,15 @@ pub mod utils {
 
         return ret_string.chars().rev().collect();
     }
+
+    pub fn if_file_exists(path: &super::PathBuf, filename: &String) -> bool {
+        let mut full_path: super::PathBuf = path.clone();
+        let mut full_filename = filename.clone();
+        full_filename.push_str(".png");
+        full_path.push(full_filename);
+
+        return full_path.exists();
+    }
 }
 pub mod command {
     pub fn screen(path: super::PathBuf, filename: String) {
